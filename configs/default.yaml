@@ -1,0 +1,33 @@
+# Sentinel ECG — default configuration
+data:
+  mitdb_dir: data/mitdb
+  processed_npz: data/processed.npz
+  splits_dir: data/splits
+
+preprocess:
+  fs: 360
+  bandpass_low: 0.5
+  bandpass_high: 40.0
+  filter_order: 4
+  window_before: 90
+  window_after: 120
+
+split:
+  strategy: patient_separated
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+model:
+  type: random_forest
+  n_estimators: 200
+  class_weight: balanced
+  random_state: 42
+
+safety:
+  refer_threshold: 0.70
+  critical_classes: ["V", "S", "F", "Q"]
+
+logging:
+  level: INFO
+  file: logs/sentinel.log
